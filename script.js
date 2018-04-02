@@ -1,24 +1,26 @@
 const BASE_URL = 'http://api.reactprototypes.com';
-const API_KEY = '?key=testuser1234';
+const API_KEY = '?key=testuser1234'; //query string - everything afer a "?" is a query string
 
 axios.get(`${BASE_URL}/todos${API_KEY}`).then(resp => {
-    const { todos } = resp.data;
-    const table = $('table tbody');
+    console.log('Server Response:', resp);
+}).catch( err => {
+    console.log('There was an error:', err.message);
+}); //ALL AXIOS METHODS RETURN A PROMISE, CATCH REFERS TO CATCHING ANY ERRORS
 
-    addToDom(todos, table);
+const newItem =  {
+    title: 'Sasha\'s new item!',
+    details: 'Some neat details go here'
+};
+
+// axios.post(`${BASE_URL}/todos${API_KEY}`, newItem).then(resp => {
+//     console.log('Add Response:', resp);
+// });
+
+axios.get(`${BASE_URL}/todos/${itemId + API_KEY}`).then(resp => {
+    console.log('Single item resp:', resp);
 });
 
-const addToDom = (list, container) => {
-    const tableRows = list.map((item, index) => {
+const itemId = '5ac27908329150131fbbff6e';
 
-        const tableData = [
-            $(`<td>${index + 1}</td>`),
-            $(`<td>${item.title}</td>`),
-            item.complete ? $(`<td class="text-success">Yes</td>`) : $(`<td class="text-danger">No</td>`)
-        ];
+// http://api.reactprototypes.com/todos/id?key=testuser1234
 
-        return $('<tr>').append(tableData);
-    });
-
-    container.append(tableRows);
-};
